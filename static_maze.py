@@ -2,7 +2,6 @@ import numpy as np
 
 def simulate (chromosome,maze,goal):
     x,y=0,0
-
     for gene in chromosome:
         newX,newY=x,y
 

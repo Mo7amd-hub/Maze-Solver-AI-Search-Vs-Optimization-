@@ -1,5 +1,7 @@
 def simulate (chromosome,maze,goal):
     x,y=0,0
+    path = [(0, 0)]
+
     for gene in chromosome:
         newX,newY=x,y
 
@@ -14,6 +16,7 @@ def simulate (chromosome,maze,goal):
         
         if(0<= newX < maze.shape[0]) and (0<= newY < maze.shape[1]) and maze[newX,newY]==0:
             x,y=newX,newY
+            path.append((x, y))
             if (x, y) == goal:
                 break
-    return (x,y)
+    return (x,y), path

@@ -2,6 +2,7 @@ import numpy as np
 
 def simulate (chromosome,maze,goal):
     x,y=0,0
+    path = [(0, 0)]
     for gene in chromosome:
         newX,newY=x,y
 
@@ -16,10 +17,10 @@ def simulate (chromosome,maze,goal):
         
         if(0<= newX < maze.shape[0]) and (0<= newY < maze.shape[1]) and maze[newX,newY]==0:
             x,y=newX,newY
+            path.append((x, y))
             if (x, y) == goal:
                 break
-    return (x,y)
-    
+    return (x,y), path
 
 def calculate_fitness(x,y,goal):
     distance = abs(goal[0]-x)+abs(goal[1]-y)
@@ -29,9 +30,18 @@ def calculate_fitness(x,y,goal):
     return score
 #--------------------------- Main Code -----------------------------------
 
-maze=np.random.randint(0,2,(10,10))
-maze[0, 0] = 0
-maze[9, 9] = 0
+maze = np.array([
+    [0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+    [1, 1, 0, 1, 0, 1, 1, 1, 1, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 1, 0],
+    [0, 1, 1, 1, 1, 1, 1, 0, 1, 0],
+    [0, 0, 0, 0, 0, 0, 1, 0, 1, 0],
+    [1, 1, 1, 1, 1, 0, 1, 0, 0, 0],
+    [0, 0, 0, 0, 1, 0, 1, 1, 1, 1],
+    [0, 1, 1, 0, 1, 0, 0, 0, 0, 0],
+    [0, 1, 0, 0, 1, 1, 1, 1, 1, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+])
 goal=(9,9)
 
 cromosome_length=maze.size
@@ -39,13 +49,23 @@ population_size=100
 population=np.random.randint(0,4,(population_size,cromosome_length))
 
 fitness_scores=[]
+paths=[]
 
 for chromosome in population:
     print(f"chromosome: {chromosome}")
     
-    x,y=simulate(chromosome,maze,goal)
+    final_pos,path=simulate(chromosome,maze,goal)
+    x,y=final_pos
+    paths.append(path)
     print(f"Final position: ({x}, {y})")
 
     fitness= calculate_fitness(x, y, goal)
     fitness_scores.append(fitness)
     print(f"fitness score: {fitness}")
+
+best_index=np.argmax(fitness_scores)
+best_chromosome=population[best_index]
+best_path=paths[best_index]
+print(f"Best chromosome:\n {best_chromosome}")
+print(f"It's fitness score: {fitness_scores[best_index]}")
+print(f"It's path: {best_path}")

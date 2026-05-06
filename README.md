@@ -2,12 +2,18 @@
 
 This project compares the performance and approach of traditional search algorithms versus evolutionary optimization algorithms in solving a static 2D maze. 
 
-## 🎯 Project Overview
-The core idea is to navigate a 10x10 grid environment where `0` represents a walkable path and `1` represents an impassable wall. The agent starts at `(0,0)` and aims to reach the goal at `(9,9)`. 
+## 📌 Overview
+This project solves a 20x20 maze using two different approaches:
+1. **Breadth-First Search (BFS):** Finds the guaranteed shortest path (Ground Truth).
+2. **Genetic Algorithm (GA):** Evolves a path using natural selection mechanics to find an optimal or near-optimal solution.
 
-We implemented and compared two distinct approaches:
-1. **Breadth-First Search (BFS):** A deterministic search algorithm that guarantees finding the shortest path by exploring all possible routes systematically.
-2. **Genetic Algorithm (GA):** A stochastic optimization approach where an agent evolves a sequence of directional moves (genes) over generations to minimize its Manhattan distance to the goal.
+## ⚙️ Genetic Algorithm Cycle
+The GA implementation follows the standard evolutionary pipeline to navigate the maze:
+* **Population Initialization:** Generating an initial set of random paths.
+* **Fitness Evaluation:** Scoring paths based on their proximity to the goal.
+* **Selection:** Choosing the best-performing paths to become parents.
+* **Crossover:** Combining parts of parent paths to create new offspring.
+* **Mutation:** Introducing random movements to explore new routes and escape dead-ends.
 
 ## 🛠️ Technologies Used
 * **Language:** Python
